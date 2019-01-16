@@ -6,6 +6,10 @@ class Journey
     end
 
     def start_journey(station)
+      if @entry_station
+        @entry_station = station
+        raise "journey already started"
+      end
         @entry_station = station
 
     end
@@ -15,6 +19,7 @@ class Journey
     end
 
     def end_journey(station)
+        raise "Journey not started" if !@entry_station
         save_journey(@entry_station, station)
         @entry_station = nil
     end
@@ -23,4 +28,7 @@ class Journey
         @list_of_journies << {entry: station1, exit: station2}
     end
 
+    def fare
+        Oystercard::MIN_BALANCE
+    end
 end

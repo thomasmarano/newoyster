@@ -9,6 +9,7 @@ describe Oystercard do
     @card = Oystercard.new
     @card.topup(20)
     @amount = double("amount")
+    @entry_station = double("entry station")
     @exit_station = double("exit station")
   end
 
@@ -64,12 +65,18 @@ describe Oystercard do
       subject.touch_in(station)
       expect(subject.journey.entry_station).to eq station
     end
+    it "deducts £6 penalty if tapped out twice" do
+        @card.touch_in(@entry_station)
+        expect {@card.touch_in(@exit_station)}.to change{@card.balance}.by(-6)
+    end
+
   end
 
   describe "#touch_out" do
     it {is_expected.to respond_to(:touch_out).with(1).arguments}
     it "reduces balance by correct amount" do
-        expect {subject.touch_out(@exit_station)}.to change{subject.balance}.by(-Oystercard::MIN_BALANCE)
+        @card.touch_in(@entry_station)
+        expect {@card.touch_out(@exit_station)}.to change{@card.balance}.by(-Oystercard::MIN_BALANCE)
     end
 
     it "forgets the last station" do
@@ -80,9 +87,12 @@ describe Oystercard do
     end
 
     it "adds a journey to journey.list_of_journies" do
+        @card.touch_in(@entry_station)
         expect{@card.touch_out(@exit_station)}.to change{@card.journey.list_of_journies.length}.by(1)
     end
-
+    it "deducts £6 penalty if tapped out twice" do
+        expect {@card.touch_out(@exit_station)}.to change{@card.balance}.by(-6)
+    end
   end
 
   describe

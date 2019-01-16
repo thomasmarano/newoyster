@@ -26,14 +26,21 @@ class Oystercard
   end
 
   def touch_in(station)
-    fail "balance too low" if @balance < MIN_BALANCE
-    @journey.start_journey(station)
+    raise "balance too low" if @balance < MIN_BALANCE
+    begin
+        @journey.start_journey(station)
+    rescue
+        deduct(6)
+    end
   end
 
   def touch_out(station)
-    deduct(MIN_BALANCE)
-    @journey.end_journey(station)
-    #deduct(journey.fare)
+    begin
+        @journey.end_journey(station)
+        deduct(@journey.fare)
+    rescue
+        deduct(6)
+    end
   end
 
 private :add, :deduct
