@@ -93,7 +93,6 @@ describe Oystercard do
       it "is empty on instantiation of Oyster Card" do
           expect(subject.list_of_journies).to eq []
       end
-
   end
 
 end
