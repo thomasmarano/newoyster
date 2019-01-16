@@ -35,20 +35,20 @@ describe Oystercard do
   describe "#journey?" do
 
     it 'is initially not in a journey' do
-      expect(subject).not_to be_travelling
+      expect(subject.journey).not_to be_travelling
     end
 
     it "can touch in" do
       subject.topup(Oystercard::MIN_BALANCE)
       subject.touch_in(station)
-      expect(subject).to be_travelling
+      expect(subject.journey).to be_travelling
     end
 
     it "can touch out" do
       subject.topup(Oystercard::MIN_BALANCE)
       subject.touch_in(station)
       subject.touch_out(@exit_station)
-      expect(subject).not_to be_travelling
+      expect(subject.journey).not_to be_travelling
     end
 
   end
@@ -62,7 +62,7 @@ describe Oystercard do
     it "can remember the last station" do
       subject.topup(Oystercard::MIN_BALANCE)
       subject.touch_in(station)
-      expect(subject.entry_station).to eq station
+      expect(subject.journey.entry_station).to eq station
     end
   end
 
@@ -76,22 +76,22 @@ describe Oystercard do
       subject.topup(Oystercard::MIN_BALANCE)
       subject.touch_in(station)
       subject.touch_out(@exit_station)
-      expect(subject.entry_station).to eq nil
+      expect(subject.journey.journey.entry_station).to eq nil
     end
 
-    it "adds a journey to list_of_journies" do
-        expect{@card.touch_out(@exit_station)}.to change{@card.list_of_journies.length}.by(1)
+    it "adds a journey to journey.list_of_journies" do
+        expect{@card.touch_out(@exit_station)}.to change{@card.journey.list_of_journies.length}.by(1)
     end
 
   end
 
   describe
 
-  describe "#list_of_journies" do
-      it {is_expected.to respond_to(:list_of_journies)}
+  describe "#journey.list_of_journies" do
+      it {is_expected.to respond_to(:journey.list_of_journies)}
 
       it "is empty on instantiation of Oyster Card" do
-          expect(subject.list_of_journies).to eq []
+          expect(subject.journey.list_of_journies).to eq []
       end
   end
 
