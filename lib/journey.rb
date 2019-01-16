@@ -17,7 +17,6 @@ class Journey
     def end_journey(station)
         save_journey(@entry_station, station)
         @entry_station = nil
-
     end
 
     def save_journey(station1, station2)
