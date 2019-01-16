@@ -95,4 +95,9 @@ describe Oystercard do
       end
   end
 
+  describe "#journey" do
+      it {expect(subject.journey).to be_kind_of(Journey)}
+  end
+
+
 end
