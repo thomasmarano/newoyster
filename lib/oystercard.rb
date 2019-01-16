@@ -35,10 +35,14 @@ class Oystercard
 
   def touch_out(station)
     deduct(MIN_BALANCE)
+    save_journey(@entry_station, station)
     @entry_station = nil
   end
 
+  def save_journey(station1, station2)
+      @list_of_journies << {entry: station1, exit: station2}
+  end
 
-private :add, :deduct
+private :add, :deduct, :save_journey
 
 end

@@ -6,6 +6,8 @@ describe Oystercard do
   let(:station){ double :station }
 
   before(:each) do
+    @card = Oystercard.new
+    @card.topup(20)
     @amount = double("amount")
     @exit_station = double("exit station")
   end
@@ -65,6 +67,7 @@ describe Oystercard do
   end
 
   describe "#touch_out" do
+    it {is_expected.to respond_to(:touch_out).with(1).arguments}
     it "reduces balance by correct amount" do
         expect {subject.touch_out(@exit_station)}.to change{subject.balance}.by(-Oystercard::MIN_BALANCE)
     end
@@ -76,8 +79,13 @@ describe Oystercard do
       expect(subject.entry_station).to eq nil
     end
 
-    it {is_expected.to respond_to(:touch_out).with(1).arguments}
+    it "adds a journey to list_of_journies" do
+        expect{@card.touch_out(@exit_station)}.to change{@card.list_of_journies.length}.by(1)
+    end
+
   end
+
+  describe
 
   describe "#list_of_journies" do
       it {is_expected.to respond_to(:list_of_journies)}
@@ -85,6 +93,7 @@ describe Oystercard do
       it "is empty on instantiation of Oyster Card" do
           expect(subject.list_of_journies).to eq []
       end
+
   end
 
 end
