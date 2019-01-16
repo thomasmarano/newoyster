@@ -2,14 +2,7 @@ require 'station'
 require 'oystercard'
 
 describe Station do
-  before(:each) do
-    @hammersmith = Station.new(double("zone"),double("name"))
-  end
-  it "Responds to #zone" do
-    expect(@hammersmith).to respond_to(:zone)
-  end
-  it "Responds to #name" do
-    expect(@hammersmith).to respond_to(:name)
-  end
-
+  subject {described_class.new(3,"hi")}
+  it {is_expected.to respond_to(:name)}
+  it {is_expected.to respond_to(:zone)}
 end
