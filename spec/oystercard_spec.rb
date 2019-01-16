@@ -1,5 +1,5 @@
 require 'oystercard'
-# require 'station'
+require 'journey'
 
 describe Oystercard do
 
@@ -76,7 +76,7 @@ describe Oystercard do
       subject.topup(Oystercard::MIN_BALANCE)
       subject.touch_in(station)
       subject.touch_out(@exit_station)
-      expect(subject.journey.journey.entry_station).to eq nil
+      expect(subject.journey.entry_station).to eq nil
     end
 
     it "adds a journey to journey.list_of_journies" do
@@ -88,8 +88,6 @@ describe Oystercard do
   describe
 
   describe "#journey.list_of_journies" do
-      it {is_expected.to respond_to(:journey.list_of_journies)}
-
       it "is empty on instantiation of Oyster Card" do
           expect(subject.journey.list_of_journies).to eq []
       end
