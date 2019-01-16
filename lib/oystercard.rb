@@ -27,7 +27,7 @@ class Oystercard
 
   def touch_in(station)
     fail "balance too low" if @balance < MIN_BALANCE
-    @journey.entry_station = station
+    @journey.start_journey(station)
   end
 
   def touch_out(station)
