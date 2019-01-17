@@ -11,16 +11,15 @@ class Journey
         raise "journey already started"
       end
         @entry_station = station
-
     end
 
     def travelling?
         @entry_station ? true : false
     end
 
-    def end_journey(station)
+    def end_journey(exit_station)
         raise "Journey not started" if !@entry_station
-        save_journey(@entry_station, station)
+        save_journey(@entry_station, exit_station)
         @entry_station = nil
     end
 
